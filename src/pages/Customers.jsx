@@ -161,57 +161,76 @@ export default function Customers() {
   return (
     <div className="p-6">
       <Toaster position="top-right" />
-      {/* Header */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 gap-3">
-        <h2 className="text-2xl font-bold text-slate-800">Customers — List</h2>
+
+      {/* Page Header */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-slate-800 mb-2">
+          Customers Management
+        </h1>
+        <p className="text-gray-600">
+          Manage and track all registered customers
+        </p>
+      </div>
+
+      {/* Add Button */}
+      <div className="mb-6 flex justify-end">
         <button
           onClick={() => {
             resetForm();
             setEditMode(false);
             setOpen(true);
           }}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-md shadow hover:bg-indigo-700"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-indigo-600 to-blue-600 text-white rounded-lg shadow-lg hover:from-indigo-700 hover:to-blue-700 font-semibold transition transform hover:scale-105"
         >
-          <MdAdd />
+          <MdAdd size={20} />
           Add Customer
         </button>
       </div>
 
       {/* Customers Table */}
-      <div className="bg-white rounded-lg shadow-sm border overflow-x-auto">
-        <table className="min-w-full divide-y">
-          <thead className="bg-gray-50">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-linear-to-r from-slate-50 to-slate-100 border-b border-gray-200">
             <tr>
-              <th className="px-4 py-3 text-left text-sm text-gray-600">
+              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">
                 Name
               </th>
-              <th className="px-4 py-3 text-left text-sm text-gray-600">
+              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">
                 CNIC
               </th>
-              <th className="px-4 py-3 text-left text-sm text-gray-600">
+              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">
                 Phone
               </th>
-              <th className="px-4 py-3 text-left text-sm text-gray-600">
+              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">
                 Email
               </th>
-              <th className="px-4 py-3 text-right text-sm text-gray-600 pr-6">
+              <th className="px-6 py-4 text-right text-sm font-semibold text-gray-700">
                 Actions
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y">
+          <tbody className="divide-y divide-gray-200">
             {customers.length === 0 ? (
               <tr>
-                <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
-                  No customers yet.
+                <td
+                  colSpan={5}
+                  className="px-6 py-12 text-center text-gray-500"
+                >
+                  <div className="flex flex-col items-center">
+                    <span className="text-4xl mb-2">📋</span>
+                    <p className="font-medium">No customers yet.</p>
+                    <p className="text-sm mt-1">
+                      Click "Add Customer" to register your first customer
+                    </p>
+                  </div>
                 </td>
               </tr>
             ) : (
               customers.map((c) => (
-                <tr key={c.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-4 whitespace-nowrap">
+                <tr key={c.id} className="hover:bg-gray-50 transition">
+                  <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-medium">
+                      <div className="w-10 h-10 rounded-full bg-linear-to-br from-indigo-600 to-blue-600 text-white flex items-center justify-center font-semibold text-sm shadow-md">
                         {c.fullName
                           ?.split(" ")
                           .map((n) => n?.[0])
@@ -219,42 +238,51 @@ export default function Customers() {
                           .join("")}
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-slate-800">
+                        <div className="text-sm font-semibold text-slate-800">
                           {c.fullName}
                         </div>
-                        <div className="text-xs text-gray-400">{c.email}</div>
+                        <div className="text-xs text-gray-500">
+                          {c.email || "No email"}
+                        </div>
                       </div>
                     </div>
                   </td>
-                  <td className="px-4 py-4 text-sm text-gray-600">{c.cnic}</td>
-                  <td className="px-4 py-4 text-sm text-gray-600">
+                  <td className="px-6 py-4 text-sm text-gray-700 font-mono">
+                    {c.cnic}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-700">
                     {c.phone || "—"}
                   </td>
-                  <td className="px-4 py-4 text-sm text-gray-600">
+                  <td className="px-6 py-4 text-sm text-gray-700">
                     {c.email || "—"}
                   </td>
-                  <td className="px-4 py-4 text-right flex justify-end gap-2 pr-4">
-                    <button
-                      onClick={() => {
-                        setSelectedCustomer(c);
-                        setViewOpen(true);
-                      }}
-                      className="p-2 rounded-md hover:bg-gray-100 text-blue-600"
-                    >
-                      <MdRemoveRedEye size={18} />
-                    </button>
-                    <button
-                      onClick={() => handleEdit(c)}
-                      className="p-2 rounded-md hover:bg-gray-100 text-yellow-600"
-                    >
-                      <MdEdit size={18} />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(c.id)}
-                      className="p-2 rounded-md hover:bg-gray-100 text-red-600"
-                    >
-                      <MdDelete size={18} />
-                    </button>
+                  <td className="px-6 py-4 text-right">
+                    <div className="flex justify-end gap-2">
+                      <button
+                        onClick={() => {
+                          setSelectedCustomer(c);
+                          setViewOpen(true);
+                        }}
+                        className="p-2 rounded-lg hover:bg-blue-100 text-blue-600 transition font-semibold"
+                        title="View"
+                      >
+                        <MdRemoveRedEye size={18} />
+                      </button>
+                      <button
+                        onClick={() => handleEdit(c)}
+                        className="p-2 rounded-lg hover:bg-amber-100 text-amber-600 transition font-semibold"
+                        title="Edit"
+                      >
+                        <MdEdit size={18} />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(c.id)}
+                        className="p-2 rounded-lg hover:bg-red-100 text-red-600 transition font-semibold"
+                        title="Delete"
+                      >
+                        <MdDelete size={18} />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))
@@ -636,86 +664,176 @@ export default function Customers() {
 
       {/* View Modal */}
       {viewOpen && selectedCustomer && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+        <div className="fixed inset-0 z-50 flex items-start justify-center pt-8 px-4">
           <div
-            className="fixed inset-0 bg-black/40 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm"
             onClick={() => setViewOpen(false)}
           />
-          <div className="relative z-50 w-full max-w-3xl bg-white rounded-lg shadow-lg p-6">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold text-slate-800">
-                Customer Details
-              </h3>
+          <div className="relative z-50 w-full max-w-4xl bg-white rounded-xl shadow-2xl border border-gray-200 overflow-y-auto max-h-[90vh] hide-scrollbar">
+            <div className="sticky top-0 z-10 bg-linear-to-r from-indigo-600 to-blue-600 px-8 py-6 flex items-center justify-between border-b border-indigo-700">
+              <h3 className="text-xl font-bold text-white">Customer Details</h3>
               <button
                 onClick={() => setViewOpen(false)}
-                className="text-gray-500 hover:bg-gray-100 p-2 rounded"
+                className="text-white hover:bg-white/20 p-2 rounded-lg transition"
               >
-                <MdClose size={20} />
+                <MdClose size={24} />
               </button>
             </div>
-            <div className="space-y-2 text-sm text-slate-700">
-              <p>
-                <strong>Name:</strong> {selectedCustomer.fullName}
-              </p>
-              <p>
-                <strong>Father/Spouse:</strong>{" "}
-                {selectedCustomer.fatherOrSpouse}
-              </p>
-              <p>
-                <strong>CNIC:</strong> {selectedCustomer.cnic}
-              </p>
-              <p>
-                <strong>Phone:</strong> {selectedCustomer.phone || "—"}
-              </p>
-              <p>
-                <strong>Email:</strong> {selectedCustomer.email || "—"}
-              </p>
-              <p>
-                <strong>Address:</strong> {selectedCustomer.address || "—"}
-              </p>
-              <hr />
-              <p className="font-semibold">Next of Kin</p>
-              <p>
-                <strong>Name:</strong> {selectedCustomer.nokName}
-              </p>
-              <p>
-                <strong>CNIC:</strong> {selectedCustomer.nokCnic}
-              </p>
-              <p>
-                <strong>Phone:</strong> {selectedCustomer.nokPhone}
-              </p>
-              <hr />
-              <p className="font-semibold">Uploaded Files</p>
-              <div className="flex flex-wrap gap-3 mt-1">
-                {selectedCustomer.profilePhoto && (
-                  <img
-                    src={getPreviewURL(selectedCustomer.profilePhoto)}
-                    alt="Profile"
-                    className="w-24 h-24 object-cover rounded border"
-                  />
-                )}
-                {selectedCustomer.cnicFront && (
-                  <img
-                    src={getPreviewURL(selectedCustomer.cnicFront)}
-                    alt="CNIC Front"
-                    className="w-32 h-20 object-cover rounded border"
-                  />
-                )}
-                {selectedCustomer.cnicBack && (
-                  <img
-                    src={getPreviewURL(selectedCustomer.cnicBack)}
-                    alt="CNIC Back"
-                    className="w-32 h-20 object-cover rounded border"
-                  />
-                )}
-                {selectedCustomer.biometric && (
-                  <img
-                    src={getPreviewURL(selectedCustomer.biometric)}
-                    alt="Biometric"
-                    className="w-32 h-20 object-cover rounded border"
-                  />
-                )}
+            <div className="p-8 space-y-6">
+              {/* Personal Information Section */}
+              <div className="bg-linear-to-br from-slate-50 to-blue-50 rounded-lg p-6 border border-slate-200">
+                <h4 className="text-sm font-bold text-slate-700 uppercase tracking-wide mb-4 flex items-center gap-2">
+                  <span className="w-1 h-4 bg-indigo-600 rounded-full"></span>
+                  Personal Information
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-xs font-semibold text-gray-600 uppercase mb-1">
+                      Name
+                    </p>
+                    <p className="text-lg font-semibold text-slate-800">
+                      {selectedCustomer?.fullName}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-gray-600 uppercase mb-1">
+                      Father/Spouse
+                    </p>
+                    <p className="text-lg font-semibold text-slate-800">
+                      {selectedCustomer?.fatherOrSpouse}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-gray-600 uppercase mb-1">
+                      CNIC
+                    </p>
+                    <p className="text-lg font-mono text-slate-800">
+                      {selectedCustomer?.cnic}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-gray-600 uppercase mb-1">
+                      Phone
+                    </p>
+                    <p className="text-lg text-slate-800">
+                      {selectedCustomer?.phone || "—"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-gray-600 uppercase mb-1">
+                      Email
+                    </p>
+                    <p className="text-lg text-slate-800">
+                      {selectedCustomer?.email || "—"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-gray-600 uppercase mb-1">
+                      Address
+                    </p>
+                    <p className="text-lg text-slate-800">
+                      {selectedCustomer?.address || "—"}
+                    </p>
+                  </div>
+                </div>
               </div>
+
+              {/* Next of Kin Section */}
+              <div className="bg-linear-to-br from-amber-50 to-orange-50 rounded-lg p-6 border border-amber-200">
+                <h4 className="text-sm font-bold text-slate-700 uppercase tracking-wide mb-4 flex items-center gap-2">
+                  <span className="w-1 h-4 bg-amber-600 rounded-full"></span>
+                  Next of Kin
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div>
+                    <p className="text-xs font-semibold text-gray-600 uppercase mb-1">
+                      Name
+                    </p>
+                    <p className="text-lg font-semibold text-slate-800">
+                      {selectedCustomer?.nokName}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-gray-600 uppercase mb-1">
+                      CNIC
+                    </p>
+                    <p className="text-lg font-mono text-slate-800">
+                      {selectedCustomer?.nokCnic}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-gray-600 uppercase mb-1">
+                      Phone
+                    </p>
+                    <p className="text-lg text-slate-800">
+                      {selectedCustomer?.nokPhone}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Uploaded Documents */}
+              {(selectedCustomer?.profilePhoto ||
+                selectedCustomer?.cnicFront ||
+                selectedCustomer?.cnicBack ||
+                selectedCustomer?.biometric) && (
+                <div className="bg-linear-to-br from-green-50 to-emerald-50 rounded-lg p-6 border border-green-200">
+                  <h4 className="text-sm font-bold text-slate-700 uppercase tracking-wide mb-4 flex items-center gap-2">
+                    <span className="w-1 h-4 bg-green-600 rounded-full"></span>
+                    Uploaded Documents
+                  </h4>
+                  <div className="flex flex-wrap gap-4">
+                    {selectedCustomer?.profilePhoto && (
+                      <div className="relative">
+                        <img
+                          src={getPreviewURL(selectedCustomer.profilePhoto)}
+                          alt="Profile"
+                          className="w-24 h-24 object-cover rounded-lg border-2 border-green-300 shadow-sm"
+                        />
+                        <span className="absolute bottom-1 right-1 text-xs bg-green-500 text-white px-2 py-1 rounded">
+                          Profile
+                        </span>
+                      </div>
+                    )}
+                    {selectedCustomer?.cnicFront && (
+                      <div className="relative">
+                        <img
+                          src={getPreviewURL(selectedCustomer.cnicFront)}
+                          alt="CNIC Front"
+                          className="w-32 h-20 object-cover rounded-lg border-2 border-green-300 shadow-sm"
+                        />
+                        <span className="absolute bottom-1 right-1 text-xs bg-green-500 text-white px-2 py-1 rounded">
+                          Front
+                        </span>
+                      </div>
+                    )}
+                    {selectedCustomer?.cnicBack && (
+                      <div className="relative">
+                        <img
+                          src={getPreviewURL(selectedCustomer.cnicBack)}
+                          alt="CNIC Back"
+                          className="w-32 h-20 object-cover rounded-lg border-2 border-green-300 shadow-sm"
+                        />
+                        <span className="absolute bottom-1 right-1 text-xs bg-green-500 text-white px-2 py-1 rounded">
+                          Back
+                        </span>
+                      </div>
+                    )}
+                    {selectedCustomer?.biometric && (
+                      <div className="relative">
+                        <img
+                          src={getPreviewURL(selectedCustomer.biometric)}
+                          alt="Biometric"
+                          className="w-32 h-20 object-cover rounded-lg border-2 border-green-300 shadow-sm"
+                        />
+                        <span className="absolute bottom-1 right-1 text-xs bg-green-500 text-white px-2 py-1 rounded">
+                          Biometric
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

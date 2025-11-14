@@ -100,7 +100,7 @@ export default function Plots() {
       {/* Page Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-slate-800 mb-2">
-          🏗️ Plots Management
+          Plots Management
         </h1>
         <p className="text-gray-600">
           Manage your residential and commercial plots
@@ -251,7 +251,7 @@ export default function Plots() {
           />
           <div className="relative z-50 w-full max-w-2xl bg-white rounded-xl shadow-2xl overflow-y-auto max-h-[90vh] hide-scrollbar">
             {/* Modal Header */}
-            <div className="sticky top-0 z-10 bg-linear-to-r bg-blue-700 px-8 py-6 flex items-center justify-between border-b border-indigo-700">
+            <div className="sticky top-0 z-10 bg-linear-to-r bg-blue-600 px-8 py-6 flex items-center justify-between border-b border-indigo-700">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
                   <span className="text-2xl">

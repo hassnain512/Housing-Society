@@ -226,7 +226,7 @@ const PlansAndInstallments = () => {
       {/* Page Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-slate-800 mb-2">
-          📋 Payment Plans & Installments
+          Payment Plans & Installments
         </h1>
         <p className="text-gray-600">
           Create flexible payment plans with development charges and manage

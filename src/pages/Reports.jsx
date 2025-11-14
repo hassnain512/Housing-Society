@@ -111,7 +111,7 @@ export default function Reports() {
       
       {/* Page Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-800 mb-2">📊 Reports & Analytics</h1>
+        <h1 className="text-3xl font-bold text-slate-800 mb-2">Reports & Analytics</h1>
         <p className="text-gray-600">Track your real estate performance with detailed insights</p>
       </div>
 
