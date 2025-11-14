@@ -33,12 +33,16 @@ const Sidebar = ({ isOpen, onToggle }) => {
     { name: "Plots", path: "/plots", icon: <MdOutlineLandscape /> },
     { name: "Booking", path: "/booking", icon: <MdBookOnline /> },
     { name: "Plans", path: "/plans", icon: <MdShoppingCart /> },
-    { name: "Installments", path: "/installments", icon: <MdAttachMoney /> },
     { name: "Map View", path: "/map", icon: <MdMap /> },
     { name: "Re-Acquisition", path: "/reacquisition", icon: <MdSwapHoriz /> },
     { name: "Reports", path: "/reports", icon: <MdBarChart /> },
     { name: "Settings", path: "/settings", icon: <MdSettings /> },
   ];
+
+  // Get current page name
+  const currentPage =
+    menuItems.find((item) => item.path === location.pathname)?.name ||
+    "Dashboard";
 
   return (
     <div
@@ -54,7 +58,7 @@ const Sidebar = ({ isOpen, onToggle }) => {
         >
           {isOpen && (
             <h1 className="text-xl font-semibold text-white tracking-wide">
-              Dashboard
+              {currentPage}
             </h1>
           )}
           <button

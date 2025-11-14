@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   societyName: "My Society",
   logo: null, // base64
-  admin: { name: "", email: "" },
+  admin: { name: "", email: "", photo: null }, // photo is base64
   blocks: ["A", "B", "C"],
   categories: ["Residential", "Commercial"],
   paymentPlans: ["Monthly", "Quarterly", "Yearly"],
@@ -19,16 +19,21 @@ const settingsSlice = createSlice({
       return { ...state, ...action.payload };
     },
     addBlock(state, action) {
-      if (!state.blocks.includes(action.payload)) state.blocks.push(action.payload);
+      if (!state.blocks.includes(action.payload))
+        state.blocks.push(action.payload);
     },
     removeBlock(state, action) {
-      state.blocks = state.blocks.filter(b => b !== action.payload);
+      state.blocks = state.blocks.filter((b) => b !== action.payload);
     },
     setLogo(state, action) {
       state.logo = action.payload;
-    }
-  }
+    },
+    setAdminPhoto(state, action) {
+      state.admin = { ...state.admin, photo: action.payload };
+    },
+  },
 });
 
-export const { updateSettings, addBlock, removeBlock, setLogo } = settingsSlice.actions;
+export const { updateSettings, addBlock, removeBlock, setLogo, setAdminPhoto } =
+  settingsSlice.actions;
 export default settingsSlice.reducer;

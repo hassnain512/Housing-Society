@@ -11,8 +11,7 @@ import {
 import Dashboard from "../src/pages/Dashboard.jsx";
 import Customers from "../src/pages/Customers.jsx";
 import Booking from "../src/pages/Booking.jsx";
-import Installments from "../src/pages/Installments.jsx";
-import Plans from "../src/pages/Plans.jsx";
+import PlansAndInstallments from "../src/pages/PlansAndInstallments.jsx";
 import Reports from "../src/pages/Reports.jsx";
 import Settings from "../src/pages/Settings.jsx";
 import MapView from "../src/pages/MapView.jsx";
@@ -28,8 +27,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<Layout />}>
       <Route path="/" element={<Dashboard />} />
       <Route path="/booking" element={<Booking />} />
-      <Route path="/installments" element={<Installments />} />
-      <Route path="/plans" element={<Plans />} />
+      <Route path="/plans" element={<PlansAndInstallments />} />
       <Route path="/plots" element={<Plots />} />
       <Route path="/plots/block/:block" element={<BlockPlots />} />
       <Route path="/settings" element={<Settings />} />
